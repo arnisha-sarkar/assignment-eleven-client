@@ -2,7 +2,7 @@ import React from "react";
 import { BsFillHouseAddFill } from "react-icons/bs";
 // import { MdHomeWork, MdOutlineManageHistory } from "react-icons/md";
 import MenuItem from "./MenuItem";
-
+import { MdHomeWork, MdOutlineManageHistory } from "react-icons/md";
 const ManagerMenu = () => {
   return (
     <div>
@@ -12,12 +12,16 @@ const ManagerMenu = () => {
         label="Add Product"
         address="add-product"
       />
-      {/* <MenuItem icon={MdHomeWork} label="My Inventory" address="my-inventory" />
       <MenuItem
         icon={MdOutlineManageHistory}
         label="Manage Orders"
         address="manage-orders"
-      /> */}
+      />
+      <MenuItem
+        icon={MdHomeWork}
+        label="Pending Orders"
+        address="pending-orders"
+      />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../providers/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router";
-import { imageUpload } from "../../utils";
+import { imageUpload, saveOrUpdateUser } from "../../utils";
 
 const SignUp = () => {
   const {
@@ -43,6 +43,7 @@ const SignUp = () => {
       const imageURL = await imageUpload(imageFile);
       console.log(imageURL);
       //2. User Registration
+      await saveOrUpdateUser({ name, email, image: imageURL });
       const result = await createUserWithEmailAndPasswordFun(email, password);
       //3. Save username & profile photo
       await updateUserProfile(name, imageURL);
@@ -60,8 +61,13 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       //User Registration using google
-      const resultTwo = await signInWithPopupFun();
-      setUser(resultTwo.user);
+      const { user } = await signInWithPopupFun();
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      });
+      // setUser(user.user);
       navigate(from, { replace: true });
       setLoading(false);
       toast.success("Signup Successful");

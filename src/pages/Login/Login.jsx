@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../providers/AuthContext";
+import { saveOrUpdateUser } from "../../utils";
 
 const Login = () => {
   const {
@@ -30,11 +31,15 @@ const Login = () => {
 
     try {
       //2. User Registration
-      const result = await signInWithEmailAndPasswordFun(email, password);
-      console.log(result);
+      const { user } = await signInWithEmailAndPasswordFun(email, password);
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      });
       navigate(from, { replace: true });
       toast.success("Login Successful");
-      setUser(result.user);
+      // setUser(user.user);
     } catch (err) {
       console.log(err);
       console.log(err.code);
@@ -49,9 +54,13 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       //User Registration using google
-      const resultTwo = await signInWithPopupFun();
-      console.log(resultTwo);
-      setUser(resultTwo.user);
+      const { user } = await signInWithPopupFun();
+      await saveOrUpdateUser({
+        name: user?.displayName,
+        email: user?.email,
+        image: user?.photoURL,
+      });
+      // setUser(user.user);
       navigate(from, { replace: true });
       setLoading(false);
       toast.success("Login Successful");

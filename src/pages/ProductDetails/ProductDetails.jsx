@@ -13,11 +13,7 @@ const ProductDetails = () => {
   let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   console.log(id);
-  const {
-    data: product = {},
-    isLoading,
-    refetch,
-  } = useQuery({
+  const { data: product = {}, isLoading } = useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
       const result = await axios(

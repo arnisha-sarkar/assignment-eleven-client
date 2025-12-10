@@ -11,7 +11,12 @@ import AllProduct from "../pages/AllProduct/AllProduct";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import PaymentSucess from "../pages/Payment/PaymentSucess";
 import MyOrders from "../pages/Dashboard/Customer/MyOrders";
-import Profile from "../pages/Dashboard/Customer/Common/Profile";
+import Profile from "../pages/Dashboard/Common/Profile";
+import ManageOrder from "../pages/Dashboard/Manager/ManageOrder";
+import PendingOrders from "../pages/Dashboard/Manager/PendingOrders";
+import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
+import Statistics from "../pages/Dashboard/Common/Statistics";
+// import UpdateModal from "../pages/Dashboard/Manager/UpdateModal";
 
 export const router = createBrowserRouter([
   {
@@ -58,10 +63,26 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <Statistics />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "add-product",
         element: (
           <PrivateRoute>
             <AddProduct />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-users",
+        element: (
+          <PrivateRoute>
+            <ManageUsers />
           </PrivateRoute>
         ),
       },
@@ -81,6 +102,26 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "pending-orders",
+        element: (
+          <PrivateRoute>
+            <PendingOrders />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "manage-orders",
+        element: <ManageOrder />,
+      },
+      // {
+      //   path: "update-modal/:id",
+      //   element: (
+      //     <PrivateRoute>
+      //       <UpdateModal />
+      //     </PrivateRoute>
+      //   ),
+      // },
     ],
   },
 ]);

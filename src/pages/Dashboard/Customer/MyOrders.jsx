@@ -1,6 +1,23 @@
 import React from "react";
+import CustomerOrderDataRow from "../../../components/Dashboard/TableRows/CustomerOrderDataRow";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import useAuth from "../../../hooks/useAuth";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const MyOrders = () => {
+  const { user } = useAuth();
+  const { data: orders = [], isLoading } = useQuery({
+    queryKey: ["orders", user?.email],
+    queryFn: async () => {
+      const result = await axios(
+        `${import.meta.env.VITE_API_URL}/my-orders/${user?.email}`
+      );
+      return result.data;
+    },
+  });
+  console.log(orders);
+  if (isLoading) return <LoadingSpinner />;
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <div className="py-8">
@@ -13,26 +30,32 @@ const MyOrders = () => {
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Image
+                    Order ID
                   </th>
                   <th
+                    scope="col"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                  >
+                    Product
+                  </th>
+                  {/* <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
                     Name
-                  </th>
-                  <th
+                  </th> */}
+                  {/* <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
                     Category
-                  </th>
-                  <th
+                  </th> */}
+                  {/* <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
                     Price
-                  </th>
+                  </th> */}
                   <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
@@ -45,7 +68,12 @@ const MyOrders = () => {
                   >
                     Status
                   </th>
-
+                  <th
+                    scope="col"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                  >
+                    Payment
+                  </th>
                   <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
@@ -54,7 +82,11 @@ const MyOrders = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>{/* <CustomerOrderDataRow /> */}</tbody>
+              <tbody>
+                {orders.map((order) => (
+                  <CustomerOrderDataRow key={order._id} order={order} />
+                ))}
+              </tbody>
             </table>
           </div>
         </div>
