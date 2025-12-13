@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DeleteModal from "../../Modal/DeleteModal";
 import UpdateProductModal from "../../Modal/UpdateProductModal";
 
-const SellerOrderDataRow = ({ product, refetch }) => {
+const AllProductsData = ({ product, refetch }) => {
   let [isOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -12,7 +12,7 @@ const SellerOrderDataRow = ({ product, refetch }) => {
     setIsOpen(false);
   }
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const { _id, image, name, price, payment } = product || {};
+  const { _id, image, name, price, category } = product || {};
 
   return (
     <tr>
@@ -40,7 +40,13 @@ const SellerOrderDataRow = ({ product, refetch }) => {
         <p className="text-gray-900 ">${price}</p>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-        <p className="text-gray-900 ">payment</p>
+        <p className="text-gray-900 ">{category}</p>
+      </td>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 ">created by</p>
+      </td>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+        <p className="text-gray-900 ">show on</p>
       </td>
 
       <div className="ml-0">
@@ -83,4 +89,4 @@ const SellerOrderDataRow = ({ product, refetch }) => {
   );
 };
 
-export default SellerOrderDataRow;
+export default AllProductsData;

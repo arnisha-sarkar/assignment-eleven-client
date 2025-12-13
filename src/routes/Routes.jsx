@@ -16,7 +16,12 @@ import ManageOrder from "../pages/Dashboard/Manager/ManageOrder";
 import PendingOrders from "../pages/Dashboard/Manager/PendingOrders";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
 import Statistics from "../pages/Dashboard/Common/Statistics";
-// import UpdateModal from "../pages/Dashboard/Manager/UpdateModal";
+import AboutUs from "../pages/AboutUs";
+import Contact from "../pages/Contact";
+import AllProducts from "../pages/Dashboard/Admin/AllProducts";
+import AllOrders from "../pages/Dashboard/Admin/AllOrders";
+import AllOrderDetails from "../pages/Dashboard/Admin/AllOrderDetails";
+import ApproveOrders from "../pages/Dashboard/Manager/ApproveOrders";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +36,14 @@ export const router = createBrowserRouter([
       {
         path: "/all-product",
         element: <AllProduct />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/product-details/:id",
@@ -87,6 +100,30 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "all-products",
+        element: (
+          <PrivateRoute>
+            <AllProducts />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "all-orders",
+        element: (
+          <PrivateRoute>
+            <AllOrders />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "order-details/:id",
+        element: (
+          <PrivateRoute>
+            <AllOrderDetails />
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "profile",
         element: (
           <PrivateRoute>
@@ -107,6 +144,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <PendingOrders />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "approve-orders",
+        element: (
+          <PrivateRoute>
+            <ApproveOrders />
           </PrivateRoute>
         ),
       },

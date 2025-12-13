@@ -1,22 +1,19 @@
 import React from "react";
-import SellerOrderDataRow from "../../../components/Dashboard/TableRows/SellerOrderDataRow";
+import useAuth from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
-import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 import axios from "axios";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
+import AllOrderData from "../../../components/Dashboard/TableRows/AllOrderData";
 
-const ManageOrder = () => {
-  const {
-    data: products = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["all-product"],
+const AllOrders = () => {
+  const { data: orders = [], isLoading } = useQuery({
+    queryKey: ["all-orders"],
     queryFn: async () => {
-      const result = await axios(`${import.meta.env.VITE_API_URL}/all-product`);
-      return result.data;
+      const res = await axios(`${import.meta.env.VITE_API_URL}/all-orders`);
+      return res.data;
     },
   });
-  console.log(products);
+
   if (isLoading) return <LoadingSpinner />;
   return (
     <div className="container mx-auto px-4 sm:px-8">
@@ -30,54 +27,45 @@ const ManageOrder = () => {
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Image
+                    Order ID
                   </th>
                   <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Name
+                    User
                   </th>
-                  {/* <th
-                    scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                  >
-                    Category
-                  </th> */}
                   <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Price
-                  </th>
-                  {/* <th
-                    scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                  >
-                    Quantity
-                  </th> */}
-                  <th
-                    scope="col"
-                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
-                  >
-                    Payment Mode
+                    Product
                   </th>
 
                   <th
                     scope="col"
                     className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
                   >
-                    Actions
+                    Quantity
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                  >
+                    Status
+                  </th>
+
+                  <th
+                    scope="col"
+                    className="px-5 py-3 bg-white  border-b border-gray-200 text-gray-800  text-left text-sm uppercase font-normal"
+                  >
+                    Action
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
-                  <SellerOrderDataRow
-                    key={product._id}
-                    product={product}
-                    refetch={refetch}
-                  />
+                {orders.map((order) => (
+                  <AllOrderData key={order._id} order={order} />
                 ))}
               </tbody>
             </table>
@@ -88,4 +76,4 @@ const ManageOrder = () => {
   );
 };
 
-export default ManageOrder;
+export default AllOrders;

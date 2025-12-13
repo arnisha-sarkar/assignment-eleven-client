@@ -72,7 +72,7 @@ const Sideber = () => {
               />
               {/* Role-Based Menu */}
               {role === "customer" && <CustomerMenu />}
-              {role === "manager" && <ManagerMenu />}
+              {role === "seller" && <ManagerMenu />}
               {role === "admin" && <AdminMenu />}
               {/* <CustomerMenu />
               <ManagerMenu />
@@ -86,7 +86,7 @@ const Sideber = () => {
 
             <MenuItem
               icon={FcSettings}
-              label="Profile"
+              label="My Profile"
               address="/dashboard/profile"
             />
             {/* <button

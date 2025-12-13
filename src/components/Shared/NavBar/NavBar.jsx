@@ -24,7 +24,7 @@ const NavBar = () => {
   return (
     <>
       <Container>
-        <div className="navbar bg-[gray] shadow-sm">
+        <div className="navbar bg-[#4CAF50] shadow-sm">
           <div className="navbar-start">
             <div className="dropdown">
               <div
@@ -84,10 +84,10 @@ const NavBar = () => {
               {!user && (
                 <>
                   <li>
-                    <MyLink to="/">About Us</MyLink>
+                    <MyLink to="/about-us">About Us</MyLink>
                   </li>
                   <li>
-                    <MyLink to="/">Contact</MyLink>
+                    <MyLink to="/contact">Contact</MyLink>
                   </li>
                 </>
               )}

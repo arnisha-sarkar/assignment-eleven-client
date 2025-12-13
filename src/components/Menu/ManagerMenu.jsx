@@ -22,6 +22,11 @@ const ManagerMenu = () => {
         label="Pending Orders"
         address="pending-orders"
       />
+      <MenuItem
+        icon={MdHomeWork}
+        label="Approve Orders"
+        address="approve-orders"
+      />
     </div>
   );
 };
