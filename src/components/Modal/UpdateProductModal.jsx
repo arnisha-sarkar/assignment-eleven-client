@@ -1,6 +1,15 @@
-import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle, Portal } from "@headlessui/react";
 import UpdateProductForm from "../Form/UpdateProductForm";
-const UpdateProductModal = ({ setIsEditModalOpen, isOpen }) => {
+const UpdateProductModal = ({
+  setIsEditModalOpen,
+  isOpen,
+  product,
+  refetch,
+}) => {
+  const closeModal = () => {
+    setIsEditModalOpen(false);
+  };
+
   return (
     <Dialog
       open={isOpen}
@@ -29,7 +38,11 @@ const UpdateProductModal = ({ setIsEditModalOpen, isOpen }) => {
               Update Plant Info
             </DialogTitle>
             <div className="mt-2 w-full">
-              <UpdateProductForm />
+              <UpdateProductForm
+                product={product}
+                refetch={refetch}
+                closeModal={closeModal}
+              />
             </div>
           </DialogPanel>
         </div>

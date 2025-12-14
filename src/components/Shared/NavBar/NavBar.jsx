@@ -5,7 +5,7 @@ import { AuthContext } from "../../../providers/AuthContext";
 import toast from "react-hot-toast";
 import { ClockLoader } from "react-spinners";
 import MyLink from "../../LInks/MyLink";
-
+import logo from "../../../assets/logo.jpg";
 const NavBar = () => {
   const { user, setUser, signOutFun, loading, setLoadin } =
     useContext(AuthContext);
@@ -24,7 +24,7 @@ const NavBar = () => {
   return (
     <>
       <Container>
-        <div className="navbar bg-[#4CAF50] shadow-sm">
+        <div className="navbar shadow-sm">
           <div className="navbar-start">
             <div className="dropdown">
               <div
@@ -71,7 +71,8 @@ const NavBar = () => {
                 </li>
               </ul>
             </div>
-            <a className="btn btn-ghost text-xl">Garments Order</a>
+            {/* <a className="btn btn-ghost text-xl">Garments Order</a> */}
+            <img className="w-[100px] h-[100px]" src={logo} alt="" />
           </div>
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">
@@ -132,25 +133,29 @@ const NavBar = () => {
                   >
                     Dashboard
                   </Link>
-                  <button onClick={handleSignOut} className="my-btn">
+                  <button
+                    onClick={handleSignOut}
+                    className="my-btn mt-4 font-semibold"
+                  >
                     Logout
                   </button>
                 </div>
               </div>
             ) : (
               <div>
-                <Link
+                <MyLink
                   to="/login"
-                  className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                  className="px-4 py-3 hover:bg-neutral-100 transition font-semibold text-gray-600"
                 >
                   Login
-                </Link>
-                <Link
+                </MyLink>
+
+                <MyLink
                   to="/signup"
-                  className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                  className="px-4 py-3  transition font-semibold text-gray-600"
                 >
                   Register
-                </Link>
+                </MyLink>
               </div>
             )}
           </div>

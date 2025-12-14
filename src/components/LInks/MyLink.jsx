@@ -7,7 +7,7 @@ const MyLink = ({ to, className, children }) => {
       to={to}
       className={({ isActive }) =>
         isActive
-          ? "text-[#fff]"
+          ? "text-[#007aff]"
           : `${className} font-semibold text-gray-600   text-sm`
       }
     >

@@ -76,6 +76,8 @@ const SellerOrderDataRow = ({ product, refetch }) => {
           <UpdateProductModal
             isOpen={isEditModalOpen}
             setIsEditModalOpen={setIsEditModalOpen}
+            product={product}
+            refetch={refetch}
           />
         </td>
       </div>
