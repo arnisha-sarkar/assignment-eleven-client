@@ -3,10 +3,10 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import brand from "../../../assets/company_logo_1.jpg";
-import brandOne from "../../../assets/company_logo_1.jpg";
-import brandTwo from "../../../assets/company_logo_1.jpg";
-import brandThree from "../../../assets/company_logo_1.jpg";
-import brandFour from "../../../assets/company_logo_1.jpg";
+import brandOne from "../../../assets/brand2.jpg";
+import brandTwo from "../../../assets/brand3.png";
+import brandThree from "../../../assets/brand4.jpg";
+import brandFour from "../../../assets/brand5.jpg";
 const brandLogos = [brand, brandOne, brandTwo, brandThree, brandFour];
 const Brands = () => {
   return (
