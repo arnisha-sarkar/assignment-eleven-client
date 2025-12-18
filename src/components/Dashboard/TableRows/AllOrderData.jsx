@@ -48,7 +48,7 @@ const AllOrderData = ({ order, user }) => {
         </Link>
 
         {/* Cancel Button */}
-        <button
+        {/* <button
           onClick={() => setIsOpen(true)}
           disabled={order.status !== "Pending"}
           className={`relative cursor-pointer inline-block px-3 py-1 font-semibold text-lime-900 leading-tight
@@ -57,7 +57,7 @@ const AllOrderData = ({ order, user }) => {
         >
           <span className="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
           <span className="relative">Cancel</span>
-        </button>
+        </button> */}
       </td>
 
       {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">

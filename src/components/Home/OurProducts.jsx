@@ -22,7 +22,7 @@ const OurProducts = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:3000/six-card")
+    fetch(`${import.meta.env.VITE_API_URL}/six-card`)
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
