@@ -79,7 +79,7 @@ const SignUp = () => {
 
   return (
     <Container>
-      <div className="min-h-[96vh] flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 relative overflow-hidden">
+      <div className="min-h-[96vh] flex items-center justify-center bg-gradient-to-br bg-[#000] relative overflow-hidden">
         {/* Animated floating circles */}
         <div className="absolute inset-0">
           <div className="absolute w-72 h-72 bg-pink-400/30 rounded-full blur-2xl top-10 left-10 animate-pulse"></div>
@@ -212,34 +212,6 @@ const SignUp = () => {
                     </p>
                   )}
                 </div>
-                {/* Image */}
-                <div>
-                  <label
-                    htmlFor="image"
-                    className="block mb-2 text-sm font-medium text-gray-700"
-                  >
-                    Profile Image
-                  </label>
-                  <input
-                    name="image"
-                    type="file"
-                    id="image"
-                    accept="image/*"
-                    className="block w-full text-sm text-gray-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-md file:border-0
-      file:text-sm file:font-semibold
-      file:bg-lime-50 file:text-lime-700
-      hover:file:bg-lime-100
-      bg-gray-100 border border-dashed border-lime-300 rounded-md cursor-pointer
-      focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400
-      py-2"
-                    {...register("image")}
-                  />
-                  <p className="mt-1 text-xs text-gray-400">
-                    PNG, JPG or JPEG (max 2MB)
-                  </p>
-                </div>
                 <div>
                   <label htmlFor="email" className="block mb-2 text-sm">
                     Email address
@@ -265,6 +237,35 @@ const SignUp = () => {
                     </p>
                   )}
                 </div>
+                {/* Image */}
+                <div>
+                  <label
+                    htmlFor="image"
+                    className="block mb-2 text-sm font-medium text-[#fff]"
+                  >
+                    photoURL
+                  </label>
+                  <input
+                    name="image"
+                    type="file"
+                    id="image"
+                    accept="image/*"
+                    className="block w-full text-sm text-gray-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-md file:border-0
+      file:text-sm file:font-semibold
+      file:bg-lime-50 file:text-lime-700
+      hover:file:bg-lime-100
+      bg-gray-100 border border-dashed border-lime-300 rounded-md cursor-pointer
+      focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400
+      py-2"
+                    {...register("image")}
+                  />
+                  <p className="mt-1 text-xs text-[#fff]">
+                    PNG, JPG or JPEG (max 2MB)
+                  </p>
+                </div>
+
                 <div>
                   <div className="flex justify-between">
                     <label htmlFor="password" className="text-sm mb-2">
@@ -291,7 +292,7 @@ const SignUp = () => {
                     })}
                   />
                   {errors.password && (
-                    <p className="text-red-500 text-xs mt-1">
+                    <p className="text-red-400 text-xs mt-1">
                       {errors.password.message}
                     </p>
                   )}
@@ -308,11 +309,11 @@ const SignUp = () => {
               </div>
             </form>
             <div className="flex items-center pt-4 space-x-1">
-              <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
-              <p className="px-3 text-sm dark:text-gray-400">
+              <div className="flex-1 h-px sm:w-16 dark:bg-white"></div>
+              <p className="px-3 text-sm dark:text-[#fff]">
                 Signup with social accounts
               </p>
-              <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
+              <div className="flex-1 h-px sm:w-16 dark:bg-white"></div>
             </div>
             <div
               onClick={handleGoogleSignIn}
@@ -320,11 +321,11 @@ const SignUp = () => {
             >
               <p>Continue with Google</p>
             </div>
-            <p className="px-6 text-sm text-center text-gray-400">
+            <p className="px-6 text-sm text-center text-[#fff]">
               Already have an account?{" "}
               <Link
                 to="/login"
-                className="hover:underline hover:text-lime-500 text-gray-600"
+                className="hover:underline hover:text-lime-500 text-[#fff]"
               >
                 Login
               </Link>

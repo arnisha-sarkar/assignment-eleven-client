@@ -14,7 +14,7 @@ const ManagerMenu = () => {
       />
       <MenuItem
         icon={MdOutlineManageHistory}
-        label="Manage Orders"
+        label="Manage Products"
         address="manage-orders"
       />
       <MenuItem

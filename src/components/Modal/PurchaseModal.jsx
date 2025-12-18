@@ -67,7 +67,7 @@ const PurchaseModal = ({ closeModal, isOpen, product }) => {
                 id="quantity"
                 type="number"
                 placeholder="Quantity"
-                className="w-full px-4 py-3 text-gray-800 border border-lime-300 rounded-md bg-white focus:outline-lime-500"
+                className="w-full px-4 py-3 text-gray-800 border border-lime-300 rounded-md bg-white focus:outline-lime-500 mt-2"
               />
             </div>
             <div className="mt-2">

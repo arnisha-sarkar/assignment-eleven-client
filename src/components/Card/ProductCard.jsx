@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router";
-
 const ProductCard = ({ product }) => {
   const { _id, image, name, category, price, quantity } = product || {};
   console.log(product);
@@ -40,11 +39,10 @@ const ProductCard = ({ product }) => {
         {/* Product Category */}
         <p className="text-sm text-gray-500">Category: {category}</p>
 
-        {/* Available Quantity */}
-        <p className="text-sm text-gray-500">Available: {quantity}</p>
-
         {/* Price */}
         <div className="font-bold text-lg text-lime-600">${price}</div>
+        {/* Available Quantity */}
+        <p className="text-sm text-gray-500">Available: {quantity}</p>
 
         {/* View Details Button */}
         <button

@@ -4,7 +4,14 @@ import MenuItem from "../../../Menu/MenuItem";
 
 const CustomerMenu = () => {
   return (
-    <MenuItem icon={BsFingerprint} label="My Orders" address="my-orders" />
+    <>
+      <MenuItem icon={BsFingerprint} label="My Orders" address="my-orders" />
+      {/* <MenuItem
+        icon={BsFingerprint}
+        label="Track Order"
+        address="track-order/:id"
+      /> */}
+    </>
   );
 };
 

@@ -72,7 +72,7 @@ const Login = () => {
   return (
     <div>
       <Container>
-        <div className="min-h-[calc(100vh-20px)] flex items-center justify-center bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-600 relative overflow-hidden">
+        <div className="min-h-[calc(100vh-20px)] flex items-center justify-center bg-gradient-to-br bg-[#000] relative overflow-hidden">
           {/* Animated glow orbs */}
           <div className="absolute inset-0">
             <div className="absolute w-72 h-72 bg-purple-400/30 rounded-full blur-xl top-10 left-10 animate-pulse"></div>
@@ -145,7 +145,7 @@ const Login = () => {
                     })}
                   />
                   {errors.password && (
-                    <p className="text-red-500 text-xs mt-1">
+                    <p className="text-[#fff] text-xs mt-1">
                       {errors.password.message}
                     </p>
                   )}
@@ -189,7 +189,7 @@ const Login = () => {
                 </button>
 
                 {/* Github Signin */}
-                <button
+                {/* <button
                   type="button"
                   className="flex items-center justify-center gap-3 bg-white text-gray-800 px-5 py-2 rounded-lg w-full font-semibold hover:bg-gray-100 transition-colors cursor-pointer"
                 >
@@ -199,7 +199,7 @@ const Login = () => {
                     className="w-5 h-5"
                   />
                   Continue with Github
-                </button>
+                </button> */}
 
                 <p className="text-center text-sm text-white/80 mt-3">
                   Don’t have an account?{" "}

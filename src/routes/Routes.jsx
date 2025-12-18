@@ -15,13 +15,14 @@ import Profile from "../pages/Dashboard/Common/Profile";
 import ManageOrder from "../pages/Dashboard/Manager/ManageOrder";
 import PendingOrders from "../pages/Dashboard/Manager/PendingOrders";
 import ManageUsers from "../pages/Dashboard/Admin/ManageUsers";
-import Statistics from "../pages/Dashboard/Common/Statistics";
+// import Statistics from "../pages/Dashboard/Common/Statistics";
 import AboutUs from "../pages/AboutUs";
 import Contact from "../pages/Contact";
 import AllProducts from "../pages/Dashboard/Admin/AllProducts";
 import AllOrders from "../pages/Dashboard/Admin/AllOrders";
 import AllOrderDetails from "../pages/Dashboard/Admin/AllOrderDetails";
 import ApproveOrders from "../pages/Dashboard/Manager/ApproveOrders";
+import TrackOrder from "../pages/Dashboard/Customer/TrackOrder";
 
 export const router = createBrowserRouter([
   {
@@ -75,14 +76,14 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      {
-        index: true,
-        element: (
-          <PrivateRoute>
-            <Statistics />
-          </PrivateRoute>
-        ),
-      },
+      // {
+      //   index: true,
+      //   element: (
+      //     <PrivateRoute>
+      //       <Statistics />
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
         path: "add-product",
         element: (
@@ -136,6 +137,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyOrders />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "track-order/:id",
+        element: (
+          <PrivateRoute>
+            <TrackOrder />
           </PrivateRoute>
         ),
       },

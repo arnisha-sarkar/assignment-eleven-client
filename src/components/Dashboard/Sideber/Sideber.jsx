@@ -6,7 +6,7 @@ import { FcSettings } from "react-icons/fc";
 import { AiOutlineBars } from "react-icons/ai";
 import { BsGraphUp } from "react-icons/bs";
 import { Link } from "react-router";
-import Manager from "../../../pages/Dashboard/Manager/Manager";
+// import Manager from "../../../pages/Dashboard/Manager/Manager";
 import ManagerMenu from "../../Menu/ManagerMenu";
 import MenuItem from "../../Menu/MenuItem";
 import CustomerMenu from "./Menu/CustomerMenu";
@@ -65,11 +65,11 @@ const Sideber = () => {
             {/*  Menu Items */}
             <nav>
               {/* Common Menu */}
-              <MenuItem
+              {/* <MenuItem
                 icon={BsGraphUp}
                 label="Statistics"
                 address="/dashboard"
-              />
+              /> */}
               {/* Role-Based Menu */}
               {role === "customer" && <CustomerMenu />}
               {role === "seller" && <ManagerMenu />}
