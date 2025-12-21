@@ -72,7 +72,7 @@ const Sideber = () => {
               /> */}
               {/* Role-Based Menu */}
               {role === "customer" && <CustomerMenu />}
-              {role === "seller" && <ManagerMenu />}
+              {role === "manager" && <ManagerMenu />}
               {role === "admin" && <AdminMenu />}
               {/* <CustomerMenu />
               <ManagerMenu />

@@ -7,7 +7,12 @@ import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const MyOrders = () => {
   const { user } = useAuth();
-  const { data: orders = [], isLoading } = useQuery({
+  console.log(user);
+  const {
+    data: orders = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["orders", user?.email],
     queryFn: async () => {
       const result = await axios(
@@ -84,7 +89,11 @@ const MyOrders = () => {
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <CustomerOrderDataRow key={order._id} order={order} />
+                  <CustomerOrderDataRow
+                    refetch={refetch}
+                    key={order._id}
+                    order={order}
+                  />
                 ))}
               </tbody>
             </table>

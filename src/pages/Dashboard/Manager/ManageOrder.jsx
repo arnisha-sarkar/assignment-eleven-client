@@ -195,7 +195,6 @@ import axios from "axios";
 import SellerOrderDataRow from "../../../components/Dashboard/TableRows/SellerOrderDataRow";
 
 const ManageOrder = () => {
-  // 🔍 Search text should be STRING
   const [searchText, setSearchText] = useState("");
 
   // 📦 Fetch products
@@ -207,20 +206,22 @@ const ManageOrder = () => {
     queryKey: ["all-product"],
     queryFn: async () => {
       const res = await axios(`${import.meta.env.VITE_API_URL}/all-product`);
-      return res.data.products; // 👈 must be array
+      // আপনার ব্যাকএন্ড সরাসরি res.send(result) করছে যা একটি Array
+      // তাই এখানে শুধু res.data রিটার্ন করলেই হবে।
+      return res.data;
     },
   });
 
   if (isLoading) return <LoadingSpinner />;
 
-  // 🛡️ Safe filter (only if products is array)
-  const filteredProducts = Array.isArray(products)
-    ? products.filter(
-        (product) =>
-          product?.name?.toLowerCase().includes(searchText.toLowerCase()) ||
-          product?.category?.toLowerCase().includes(searchText.toLowerCase())
-      )
-    : [];
+  // 🛡️ Safe filter
+  const filteredProducts = products.filter((product) => {
+    const search = searchText.toLowerCase();
+    return (
+      product?.name?.toLowerCase().includes(search) ||
+      product?.category?.toLowerCase().includes(search)
+    );
+  });
 
   return (
     <div className="container mx-auto px-4 sm:px-8">
@@ -232,7 +233,7 @@ const ManageOrder = () => {
             placeholder="Search by name or category..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            className="w-full md:w-1/3 px-4 py-2 border rounded"
+            className="w-full md:w-1/3 px-4 py-2 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
 
@@ -241,19 +242,19 @@ const ManageOrder = () => {
             <table className="min-w-full leading-normal">
               <thead>
                 <tr>
-                  <th className="px-5 py-3 bg-white border-b text-left text-sm">
+                  <th className="px-5 py-3 bg-gray-100 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold">
                     Image
                   </th>
-                  <th className="px-5 py-3 bg-white border-b text-left text-sm">
+                  <th className="px-5 py-3 bg-gray-100 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold">
                     Name
                   </th>
-                  <th className="px-5 py-3 bg-white border-b text-left text-sm">
+                  <th className="px-5 py-3 bg-gray-100 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold">
                     Price
                   </th>
-                  <th className="px-5 py-3 bg-white border-b text-left text-sm">
+                  <th className="px-5 py-3 bg-gray-100 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold">
                     Payment Mode
                   </th>
-                  <th className="px-5 py-3 bg-white border-b text-left text-sm">
+                  <th className="px-5 py-3 bg-gray-100 border-b border-gray-200 text-gray-800 text-left text-sm uppercase font-semibold">
                     Actions
                   </th>
                 </tr>
@@ -270,8 +271,11 @@ const ManageOrder = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5" className="text-center py-6 text-gray-500">
-                      No products found
+                    <td
+                      colSpan="5"
+                      className="text-center py-10 text-gray-500 bg-white"
+                    >
+                      No products found. Add some products first!
                     </td>
                   </tr>
                 )}

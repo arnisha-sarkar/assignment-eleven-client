@@ -11,7 +11,6 @@ const Login = () => {
     signInWithEmailAndPasswordFun,
     signInWithPopupFun,
     user,
-    setUser,
     setLoading,
   } = useContext(AuthContext);
   console.log(user);
