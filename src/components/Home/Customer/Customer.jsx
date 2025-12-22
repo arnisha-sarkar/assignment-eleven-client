@@ -6,7 +6,7 @@ const Customer = () => {
   return (
     <div>
       <Container>
-        <div className="border border-red-400 mt-12 gap-9 flex flex-col md:flex-row items-center">
+        <div className="mt-12 gap-9 flex flex-col md:flex-row items-center">
           <div className="w-[50%] flex flex-col justify-center">
             <motion.h2
               initial={{ opacity: 0, y: 40 }}
