@@ -206,8 +206,6 @@ const ManageOrder = () => {
     queryKey: ["all-product"],
     queryFn: async () => {
       const res = await axios(`${import.meta.env.VITE_API_URL}/all-product`);
-      // আপনার ব্যাকএন্ড সরাসরি res.send(result) করছে যা একটি Array
-      // তাই এখানে শুধু res.data রিটার্ন করলেই হবে।
       return res.data;
     },
   });

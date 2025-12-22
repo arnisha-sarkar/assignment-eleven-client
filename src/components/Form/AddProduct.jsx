@@ -43,16 +43,7 @@ const AddProduct = () => {
     formState: { errors },
     reset,
   } = useForm();
-  // for image start
-  // const [previewImages, setPreviewImages] = useState([]);
 
-  // // Handle image preview
-  // const handleImageChange = (e) => {
-  //   const files = Array.from(e.target.files);
-  //   const previews = files.map((file) => URL.createObjectURL(file));
-  //   setPreviewImages(previews);
-  // };
-  // for image end
   const onsubmit = async (data) => {
     const {
       name,
@@ -87,11 +78,6 @@ const AddProduct = () => {
       };
       await mutateAsync(plantData);
       reset();
-      // const { data } = await axios.post(
-      //   `${import.meta.env.VITE_API_URL}/add-product`,
-      //   plantData
-      // );
-      // console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -253,37 +239,6 @@ const AddProduct = () => {
                 </div>
               </div>
 
-              {/* MULTIPLE IMAGE UPLOAD */}
-              {/* <div className="p-4 w-full">
-                <label className="block text-sm text-gray-600 mb-1">
-                  Upload Product Images (Multiple)
-                </label>
-
-                <div className="file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg">
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    className="hidden"
-                    id="images"
-                    {...register("images", {
-                      required: "Images are required",
-                    })}
-                  />
-                  <label
-                    htmlFor="images"
-                    className="bg-lime-500 text-white rounded font-semibold cursor-pointer p-2 px-4"
-                  >
-                    Upload Images
-                  </label>
-                </div>
-
-                {errors.images && (
-                  <p className="text-xs text-red-500">
-                    {errors.images.message}
-                  </p>
-                )}
-              </div> */}
               <div className="flex flex-col w-max mx-auto text-center">
                 <label>
                   <input

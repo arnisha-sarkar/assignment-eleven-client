@@ -31,7 +31,6 @@ const UpdateUserRoleModal = ({ isOpen, closeModal, user, refetch }) => {
       });
       toast.success("Role Updated!");
       refetch();
-      // setUpdatedRole(updatedRole);
     } catch (err) {
       console.log(err);
       toast.error(err?.response?.data?.message);

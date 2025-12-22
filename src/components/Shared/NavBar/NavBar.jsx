@@ -99,14 +99,10 @@ const NavBar = () => {
               <ClockLoader />
             ) : user ? (
               <div className="text-center space-y-3">
-                {/* change popover-1 and --anchor-1 names. Use unique names for each dropdown */}
-                {/* For TSX uncomment the commented types below */}
                 <button
                   className="btn"
                   popoverTarget="popover-1"
-                  style={
-                    { anchorName: "--anchor-1" } /* as React.CSSProperties */
-                  }
+                  style={{ anchorName: "--anchor-1" }}
                 >
                   <img
                     src={user?.photoURL}
@@ -119,14 +115,10 @@ const NavBar = () => {
                   className="dropdown menu w-40 rounded-box bg-base-100 shadow-sm"
                   popover="auto"
                   id="popover-1"
-                  style={
-                    {
-                      positionAnchor: "--anchor-1",
-                    } /* as React.CSSProperties */
-                  }
+                  style={{
+                    positionAnchor: "--anchor-1",
+                  }}
                 >
-                  {/* <h2 className="text-xl font-semibold">{user?.displayName}</h2> */}
-                  {/* <p className="text-white/80">{user?.email}</p> */}
                   <Link
                     to="/dashboard"
                     className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"

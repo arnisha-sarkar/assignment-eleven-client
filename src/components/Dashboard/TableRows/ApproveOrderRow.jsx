@@ -62,15 +62,14 @@ const ApproveOrderRow = ({ order, refetch }) => {
         </td>
       </tr>
 
-      {/* --- MODAL START --- */}
       {isOpen && (
         <div
           className="fixed inset-0 w-full h-full z-[9999] flex items-center justify-center bg-black/50 backdrop-blur-sm"
-          onClick={() => setIsOpen(false)} // মডালের বাইরে ক্লিক করলে বন্ধ হবে
+          onClick={() => setIsOpen(false)}
         >
           <div
             className="bg-white rounded-lg shadow-2xl w-full max-w-md p-6 relative mx-4"
-            onClick={(e) => e.stopPropagation()} // মডালের ভেতর ক্লিক করলে যাতে বন্ধ না হয়
+            onClick={(e) => e.stopPropagation()}
           >
             <h3 className="text-xl font-bold mb-4 text-gray-800">
               Update Tracking
@@ -144,7 +143,6 @@ const ApproveOrderRow = ({ order, refetch }) => {
           </div>
         </div>
       )}
-      {/* --- MODAL END --- */}
     </>
   );
 };
