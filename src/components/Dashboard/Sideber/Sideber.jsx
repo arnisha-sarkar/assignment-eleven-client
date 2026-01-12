@@ -26,7 +26,7 @@ const Sideber = () => {
   return (
     <>
       {/* Small Screen Navbar, only visible till md breakpoint */}
-      <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden">
+      <div className="bg-gray-100 dark:bg-[#0A2540] text-gray-800 flex justify-between md:hidden">
         <div>
           <div className="block cursor-pointer p-4 font-bold">
             <Link to="/">
@@ -45,7 +45,7 @@ const Sideber = () => {
 
         <button
           onClick={handleToggle}
-          className="mobile-menu-button p-4 focus:outline-none focus:bg-gray-200"
+          className="mobile-menu-button p-4  focus:outline-none  text-white"
         >
           <AiOutlineBars className="h-5 w-5" />
         </button>

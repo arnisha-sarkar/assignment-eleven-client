@@ -8,7 +8,7 @@ const AllOrderData = ({ order, user }) => {
     order || {};
   console.log(order);
   return (
-    <tr>
+    <tr className="flex flex-col md:table-row mb-4 md:mb-0 border border-gray-200 md:border-none bg-white rounded-lg md:rounded-none shadow-sm md:shadow-none overflow-hidden">
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <p className="text-gray-900">{_id}</p>
       </td>
