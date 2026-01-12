@@ -1,290 +1,350 @@
 import { useForm } from "react-hook-form";
+
 import { imageUpload } from "../../utils";
+
 import useAuth from "../../hooks/useAuth";
+
 import axios from "axios";
+
 import { useMutation } from "@tanstack/react-query";
+
 import LoadingSpinner from "../Shared/LoadingSpinner";
+
 import ErrorPage from "../../pages/ErrorPage";
+
 import toast from "react-hot-toast";
+
+import {
+  FiPlusCircle,
+  FiUploadCloud,
+  FiImage,
+  FiVideo,
+  FiTag,
+  FiDollarSign,
+  FiLayers,
+} from "react-icons/fi";
+
 const AddProduct = () => {
   const { user } = useAuth();
-  // use mutation hook usecase
+
   const {
     isPending,
+
     isError,
+
     mutateAsync,
+
     reset: mutationReset,
   } = useMutation({
     mutationFn: async (payload) =>
       await axios.post(`${import.meta.env.VITE_API_URL}/add-product`, payload),
-    onSuccess: (data) => {
-      console.log(data);
-      // show toast
-      toast.success("product added sucessfuly");
+
+    onSuccess: () => {
+      toast.success("Product added successfully! 🚀");
+
       mutationReset();
-      // query key invalids
+
+      reset();
     },
+
     onError: (error) => {
-      console.log(error);
+      toast.error(error.message || "Something went wrong");
     },
-    onMutate: (payload) => {
-      console.log("i will post this data", payload);
-    },
-    onSettled: (data, error) => {
-      if (data) console.log(data);
-      if (error) console.log(error);
-    },
-    retry: 3,
   });
-  // react hook form
+
   const {
     register,
+
     handleSubmit,
+
     formState: { errors },
+
     reset,
+
+    watch,
   } = useForm();
 
-  const onsubmit = async (data) => {
-    const {
-      name,
-      description,
-      category,
-      quantity,
-      price,
-      image,
-      moq,
-      video,
-      payment,
-    } = data;
-    const imageFile = image[0];
+  // ইমেজ সিলেক্ট করলে ফাইলের নাম দেখানোর জন্য
+
+  const selectedImage = watch("image");
+
+  const onSubmit = async (data) => {
+    const imageFile = data.image[0];
 
     try {
       const imageUrl = await imageUpload(imageFile);
+
       const plantData = {
+        ...data,
+
         image: imageUrl,
-        name,
-        description,
-        category,
-        quantity: Number(quantity),
-        price: Number(price),
-        moq: Number(moq),
-        video,
-        payment,
+
+        quantity: Number(data.quantity),
+
+        price: Number(data.price),
+
+        moq: Number(data.moq),
+
         seller: {
           image: user?.photoURL,
+
           name: user?.displayName,
+
           email: user?.email,
         },
       };
+
       await mutateAsync(plantData);
-      reset();
     } catch (err) {
-      console.log(err);
+      toast.error("Image upload failed!");
     }
   };
+
   if (isPending) return <LoadingSpinner />;
+
   if (isError) return <ErrorPage />;
+
   return (
-    <div>
-      <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
-        <form onSubmit={handleSubmit(onsubmit)}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <div className="space-y-6">
-              {/* Product Name / Title */}
-              <div className="space-y-1 text-sm">
-                <label htmlFor="title" className="block text-gray-600">
-                  Product Name / Title
+    <div className="min-h-screen bg-gray-50/50 dark:bg-[#101828]  py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+
+        <div className="mb-8 flex items-center gap-3">
+          <div className="p-3 bg-[#C9A24D] rounded-2xl shadow-lg shadow-[#C9A24D]/20 text-white">
+            <FiPlusCircle size={28} />
+          </div>
+
+          <div>
+            <h1 className="text-2xl font-black text-gray-800 dark:text-[#F5F2EE] uppercase tracking-tight">
+              Add New Product
+            </h1>
+
+            <p className="text-sm text-gray-500 dark:text-[#F5F2EE] font-medium">
+              Create a new listing for your store
+            </p>
+          </div>
+        </div>
+
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+        >
+          {/* Left Side: General Info */}
+
+          <div className="lg:col-span-2 space-y-6">
+            <div className="bg-white p-6 sm:p-8 rounded-[2rem] border border-gray-100 shadow-sm">
+              <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <FiTag className="text-[#C9A24D]" /> General Information
+              </h3>
+
+              <div className="space-y-5">
+                {/* Product Name */}
+
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-gray-600 ml-1">
+                    Product Title
+                  </label>
+
+                  <input
+                    type="text"
+                    placeholder="e.g. Premium Cotton Shirt"
+                    className={`w-full px-5 py-4 bg-gray-50 border ${
+                      errors.name ? "border-red-300" : "border-gray-200"
+                    } rounded-2xl focus:ring-2 focus:ring-[#C9A24D]/20 focus:border-[#C9A24D] outline-none transition-all`}
+                    {...register("name", {
+                      required: "Product name is required",
+                    })}
+                  />
+
+                  {errors.name && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.name.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Description */}
+
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-gray-600 ml-1">
+                    Description
+                  </label>
+
+                  <textarea
+                    rows="5"
+                    placeholder="Describe the product details, material, and features..."
+                    className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#C9A24D]/20 focus:border-[#C9A24D] outline-none transition-all resize-none"
+                    {...register("description", {
+                      required: "Description is required",
+                    })}
+                  ></textarea>
+
+                  {errors.description && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.description.message}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Inventory & Pricing */}
+
+            <div className="bg-white p-6 sm:p-8 rounded-[2rem] border border-gray-100 shadow-sm">
+              <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <FiDollarSign className="text-[#C9A24D]" /> Pricing & Stock
+              </h3>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-gray-600 ml-1">
+                    Price
+                  </label>
+
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#C9A24D]/20 focus:border-[#C9A24D] outline-none transition-all"
+                    {...register("price", { required: "Required" })}
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-gray-600 ml-1">
+                    Stock
+                  </label>
+
+                  <input
+                    type="number"
+                    placeholder="Qty"
+                    className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#C9A24D]/20 focus:border-[#C9A24D] outline-none transition-all"
+                    {...register("quantity", { required: "Required" })}
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-sm font-semibold text-gray-600 ml-1">
+                    MOQ
+                  </label>
+
+                  <input
+                    type="number"
+                    placeholder="Min Order"
+                    className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#C9A24D]/20 focus:border-[#C9A24D] outline-none transition-all"
+                    {...register("moq", { required: "Required" })}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side: Media & Categories */}
+
+          <div className="space-y-6">
+            {/* Image Upload */}
+
+            <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <FiImage className="text-[#C9A24D]" /> Media
+              </h3>
+
+              <div className="relative group">
+                <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 rounded-[1.5rem] cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-[#C9A24D] transition-all">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <FiUploadCloud
+                      size={32}
+                      className="text-gray-400 mb-3 group-hover:text-[#C9A24D]"
+                    />
+
+                    <p className="text-sm text-gray-500 font-medium">
+                      {selectedImage?.[0]
+                        ? selectedImage[0].name
+                        : "Upload Main Image"}
+                    </p>
+                  </div>
+
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    {...register("image", { required: "Image is required" })}
+                  />
                 </label>
-                <input
-                  id="name"
-                  type="text"
-                  placeholder="Enter product name"
-                  className="w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
-                  {...register("name", {
-                    required: "Product name is required",
-                  })}
-                />
-                {errors.name && (
-                  <p className="text-red-500 text-xs">{errors.name.message}</p>
-                )}
               </div>
 
-              {/* Product Description */}
-              <div className="space-y-1 text-sm">
-                <label htmlFor="description" className="block text-gray-600">
-                  Product Description
-                </label>
-                <textarea
-                  id="description"
-                  placeholder="Write product details..."
-                  className="block rounded-md w-full h-32 px-4 py-3 text-gray-800 border border-lime-300 bg-white focus:outline-lime-500"
-                  {...register("description", {
-                    required: "Description is required",
-                  })}
-                ></textarea>
-                {errors.description && (
-                  <p className="text-xs text-red-500">
-                    {errors.description.message}
-                  </p>
-                )}
-              </div>
+              {errors.image && (
+                <p className="text-red-500 text-xs mt-2 text-center">
+                  {errors.image.message}
+                </p>
+              )}
+            </div>
 
-              {/* Category */}
-              <div className="space-y-1 text-sm">
-                <label htmlFor="category" className="block text-gray-600">
+            {/* Organization */}
+
+            <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm space-y-5">
+              <h3 className="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
+                <FiLayers className="text-[#C9A24D]" /> Organization
+              </h3>
+
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-gray-600 ml-1">
                   Category
                 </label>
+
                 <select
-                  className="w-full px-4 py-3 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
+                  className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#C9A24D]/20 focus:border-[#C9A24D] outline-none appearance-none"
                   {...register("category", {
                     required: "Category is required",
                   })}
                 >
                   <option value="Shirt">Shirt</option>
+
                   <option value="Pant">Pant</option>
+
                   <option value="Jacket">Jacket</option>
+
                   <option value="Accessories">Accessories</option>
                 </select>
-                {errors.category && (
-                  <p className="text-xs text-red-500">
-                    {errors.category.message}
-                  </p>
-                )}
               </div>
 
-              {/* Payment Options */}
-              <div className="space-y-1 text-sm">
-                <label htmlFor="payment" className="block text-gray-600">
-                  Payment Options
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-gray-600 ml-1">
+                  Payment Method
                 </label>
+
                 <select
-                  className="w-full px-4 py-3 border border-lime-300 focus:outline-lime-500 rounded-md bg-white"
-                  {...register("payment", {
-                    required: "Payment option is required",
-                  })}
+                  className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#C9A24D]/20 focus:border-[#C9A24D] outline-none appearance-none"
+                  {...register("payment", { required: "Payment required" })}
                 >
                   <option value="Cash on Delivery">Cash on Delivery</option>
+
                   <option value="PayFast">PayFast</option>
                 </select>
-
-                {errors.payment && (
-                  <p className="text-xs text-red-500">
-                    {errors.payment.message}
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* SECOND COLUMN */}
-            <div className="space-y-6 flex flex-col">
-              {/* Price + Available Quantity + MOQ */}
-              <div className="flex justify-between gap-2">
-                {/* Price */}
-                <div className="space-y-1 text-sm w-full">
-                  <label htmlFor="price" className="block text-gray-600">
-                    Price
-                  </label>
-                  <input
-                    id="price"
-                    type="number"
-                    placeholder="Price"
-                    className="w-full px-4 py-3 text-gray-800 border border-lime-300 rounded-md bg-white focus:outline-lime-500"
-                    {...register("price", {
-                      required: "Price is required",
-                    })}
-                  />
-                  {errors.price && (
-                    <p className="text-xs text-red-500">
-                      {errors.price.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Available Quantity */}
-                <div className="space-y-1 text-sm w-full">
-                  <label htmlFor="quantity" className="block text-gray-600">
-                    Available Quantity
-                  </label>
-                  <input
-                    id="quantity"
-                    type="number"
-                    placeholder="Quantity"
-                    className="w-full px-4 py-3 text-gray-800 border border-lime-300 rounded-md bg-white focus:outline-lime-500"
-                    {...register("quantity", {
-                      required: "Quantity is required",
-                    })}
-                  />
-                  {errors.quantity && (
-                    <p className="text-xs text-red-500">
-                      {errors.quantity.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* MOQ */}
-                <div className="space-y-1 text-sm w-full">
-                  <label htmlFor="moq" className="block text-gray-600">
-                    Minimum Order Quantity (MOQ)
-                  </label>
-                  <input
-                    id="moq"
-                    type="number"
-                    placeholder="MOQ"
-                    className="w-full px-4 py-3 text-gray-800 border border-lime-300 rounded-md bg-white focus:outline-lime-500"
-                    {...register("moq", { required: "MOQ is required" })}
-                  />
-                  {errors.moq && (
-                    <p className="text-xs text-red-500">{errors.moq.message}</p>
-                  )}
-                </div>
               </div>
 
-              <div className="flex flex-col w-max mx-auto text-center">
-                <label>
-                  <input
-                    className="text-sm cursor-pointer w-36 hidden"
-                    type="file"
-                    // name="image"
-                    id="image"
-                    accept="image/*"
-                    hidden
-                    {...register("image", {
-                      required: "image is required",
-                    })}
-                  />
-                  {errors.image && (
-                    <p className="text-xs text-red-500 mt-1">
-                      {errors.image.message}
-                    </p>
-                  )}
-                  <div className="btn btn-primary text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500">
-                    Upload
-                  </div>
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-gray-600 ml-1 flex items-center gap-1">
+                  <FiVideo size={14} /> Video URL
                 </label>
-              </div>
 
-              {/* Demo Video Link */}
-              <div className="space-y-1 text-sm">
-                <label htmlFor="video" className="block text-gray-600">
-                  Demo Video Link (optional)
-                </label>
                 <input
-                  id="video"
                   type="url"
-                  placeholder="https://youtube.com/demo"
-                  className="w-full px-4 py-3 text-gray-800 border border-lime-300 rounded-md bg-white focus:outline-lime-500"
+                  placeholder="Youtube link"
+                  className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#C9A24D]/20 focus:border-[#C9A24D] outline-none transition-all"
                   {...register("video")}
                 />
               </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                className="w-full cursor-pointer p-3 mt-5 text-center font-medium text-white rounded shadow-md btn btn-primary"
-              >
-                Save Product
-              </button>
             </div>
+
+            {/* Submit Button */}
+
+            <button
+              type="submit"
+              disabled={isPending}
+              className="w-full py-4 bg-[#C9A24D] hover:bg-[#b38f42] text-white font-black rounded-2xl shadow-lg shadow-[#C9A24D]/30 transition-all transform active:scale-[0.98] flex items-center justify-center gap-2"
+            >
+              {isPending ? "SAVING..." : "SAVE PRODUCT"}
+            </button>
           </div>
         </form>
       </div>
@@ -293,3 +353,289 @@ const AddProduct = () => {
 };
 
 export default AddProduct;
+
+// ----------------------------------
+// import { useForm } from "react-hook-form";
+// import { imageUpload } from "../../utils";
+// import useAuth from "../../hooks/useAuth";
+// import axios from "axios";
+// import { useMutation } from "@tanstack/react-query";
+// import LoadingSpinner from "../Shared/LoadingSpinner";
+// import ErrorPage from "../../pages/ErrorPage";
+// import toast from "react-hot-toast";
+// import {
+//   FiPlusCircle,
+//   FiUploadCloud,
+//   FiImage,
+//   FiVideo,
+//   FiTag,
+//   FiDollarSign,
+//   FiLayers,
+//   FiLock,
+//   FiUnlock,
+// } from "react-icons/fi";
+
+// const AddProduct = () => {
+//   const { user } = useAuth();
+
+//   /** * ১. মেইন ম্যানেজার চেক লজিক:
+//    * আপনার ব্রাউজার কনসোলে গিয়ে লিখবেন: localStorage.setItem('isMasterAdmin', 'true')
+//    * যারা এটি লিখবে না (যেমন HR বা Client), তারা শুধু Read-Only মোড দেখবে।
+//    */
+//   const isMasterAdmin = localStorage.getItem("isMasterAdmin") === "true";
+
+//   const {
+//     isPending,
+//     isError,
+//     mutateAsync,
+//     reset: mutationReset,
+//   } = useMutation({
+//     mutationFn: async (payload) =>
+//       await axios.post(`${import.meta.env.VITE_API_URL}/add-product`, payload),
+//     onSuccess: () => {
+//       toast.success("Product added successfully! 🚀");
+//       mutationReset();
+//       reset();
+//     },
+//     onError: (error) => {
+//       toast.error(error.message || "Something went wrong");
+//     },
+//   });
+
+//   const {
+//     register,
+//     handleSubmit,
+//     formState: { errors },
+//     reset,
+//     watch,
+//   } = useForm();
+
+//   const selectedImage = watch("image");
+
+//   const onSubmit = async (data) => {
+//     // ২. সাবমিট করার আগে আবার চেক (নিরাপত্তা)
+//     if (!isMasterAdmin) {
+//       return toast.error("READ-ONLY MODE: You cannot save changes.");
+//     }
+
+//     const imageFile = data.image[0];
+//     try {
+//       const imageUrl = await imageUpload(imageFile);
+//       const plantData = {
+//         ...data,
+//         image: imageUrl,
+//         quantity: Number(data.quantity),
+//         price: Number(data.price),
+//         moq: Number(data.moq),
+//         seller: {
+//           image: user?.photoURL,
+//           name: user?.displayName,
+//           email: user?.email,
+//         },
+//       };
+//       await mutateAsync(plantData);
+//     } catch (err) {
+//       toast.error("Image upload failed!");
+//     }
+//   };
+
+//   if (isPending) return <LoadingSpinner />;
+//   if (isError) return <ErrorPage />;
+
+//   return (
+//     <div className="min-h-screen bg-gray-50/50 dark:bg-[#101828] py-8 px-4 sm:px-6 lg:px-8">
+//       <div className="max-w-5xl mx-auto">
+//         {/* ৩. স্ট্যাটাস মেসেজ (HR/Client-কে বোঝানোর জন্য) */}
+//         <div
+//           className={`mb-6 p-4 border-l-4 flex items-center gap-3 rounded-r-xl transition-all ${
+//             isMasterAdmin
+//               ? "bg-green-50 border-green-500 text-green-700"
+//               : "bg-amber-50 border-amber-500 text-amber-700"
+//           }`}
+//         >
+//           {isMasterAdmin ? <FiUnlock className="animate-pulse" /> : <FiLock />}
+//           <div>
+//             <p className="text-sm font-bold uppercase">
+//               {isMasterAdmin
+//                 ? "Master Manager Access: Enabled"
+//                 : "Demo View Mode: Active (Read-Only)"}
+//             </p>
+//             {!isMasterAdmin && (
+//               <p className="text-xs opacity-80 font-medium">
+//                 Clients can see the UI, but database editing is restricted.
+//               </p>
+//             )}
+//           </div>
+//         </div>
+
+//         {/* Header */}
+//         <div className="mb-8 flex items-center gap-3">
+//           <div
+//             className={`p-3 rounded-2xl shadow-lg text-white ${
+//               isMasterAdmin ? "bg-[#C9A24D]" : "bg-gray-400"
+//             }`}
+//           >
+//             <FiPlusCircle size={28} />
+//           </div>
+//           <div>
+//             <h1 className="text-2xl font-black text-gray-800 dark:text-[#F5F2EE] uppercase tracking-tight">
+//               Add New Product
+//             </h1>
+//             <p className="text-sm text-gray-500 font-medium">
+//               Create a new listing for your store
+//             </p>
+//           </div>
+//         </div>
+
+//         {/* ৪. fieldset এর মাধ্যমে পুরো ফর্ম একসাথে কন্ট্রোল করা হচ্ছে */}
+//         <form onSubmit={handleSubmit(onSubmit)}>
+//           <fieldset
+//             disabled={!isMasterAdmin}
+//             className="grid grid-cols-1 lg:grid-cols-3 gap-8 group"
+//           >
+//             {/* Left Side: General Info */}
+//             <div className="lg:col-span-2 space-y-6">
+//               <div className="bg-white p-6 sm:p-8 rounded-[2rem] border border-gray-100 shadow-sm">
+//                 <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+//                   <FiTag className="text-[#C9A24D]" /> General Information
+//                 </h3>
+//                 <div className="space-y-5">
+//                   <div className="space-y-1">
+//                     <label className="text-sm font-semibold text-gray-600 ml-1">
+//                       Product Title
+//                     </label>
+//                     <input
+//                       type="text"
+//                       placeholder="e.g. Premium Cotton Shirt"
+//                       className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none focus:border-[#C9A24D] transition-all disabled:cursor-not-allowed disabled:bg-gray-100/50"
+//                       {...register("name", { required: true })}
+//                     />
+//                   </div>
+//                   <div className="space-y-1">
+//                     <label className="text-sm font-semibold text-gray-600 ml-1">
+//                       Description
+//                     </label>
+//                     <textarea
+//                       rows="5"
+//                       placeholder="Product details..."
+//                       className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none transition-all resize-none disabled:cursor-not-allowed"
+//                       {...register("description", { required: true })}
+//                     ></textarea>
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Pricing & Stock */}
+//               <div className="bg-white p-6 sm:p-8 rounded-[2rem] border border-gray-100 shadow-sm">
+//                 <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+//                   <FiDollarSign className="text-[#C9A24D]" /> Pricing & Stock
+//                 </h3>
+//                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+//                   <div className="space-y-1">
+//                     <label className="text-sm font-semibold text-gray-600 ml-1">
+//                       Price
+//                     </label>
+//                     <input
+//                       type="number"
+//                       className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none disabled:cursor-not-allowed"
+//                       {...register("price", { required: true })}
+//                     />
+//                   </div>
+//                   <div className="space-y-1">
+//                     <label className="text-sm font-semibold text-gray-600 ml-1">
+//                       Stock
+//                     </label>
+//                     <input
+//                       type="number"
+//                       className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none disabled:cursor-not-allowed"
+//                       {...register("quantity", { required: true })}
+//                     />
+//                   </div>
+//                   <div className="space-y-1">
+//                     <label className="text-sm font-semibold text-gray-600 ml-1">
+//                       MOQ
+//                     </label>
+//                     <input
+//                       type="number"
+//                       className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none disabled:cursor-not-allowed"
+//                       {...register("moq", { required: true })}
+//                     />
+//                   </div>
+//                 </div>
+//               </div>
+//             </div>
+
+//             {/* Right Side */}
+//             <div className="space-y-6">
+//               <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+//                 <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+//                   <FiImage className="text-[#C9A24D]" /> Media
+//                 </h3>
+//                 <label
+//                   className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-[1.5rem] transition-all ${
+//                     isMasterAdmin
+//                       ? "cursor-pointer hover:border-[#C9A24D] border-gray-300 bg-gray-50"
+//                       : "cursor-not-allowed border-gray-200 bg-gray-100/50"
+//                   }`}
+//                 >
+//                   <FiUploadCloud size={32} className="text-gray-400 mb-3" />
+//                   <p className="text-xs text-gray-500">
+//                     {selectedImage?.[0]?.name || "Upload Image"}
+//                   </p>
+//                   <input
+//                     type="file"
+//                     className="hidden"
+//                     {...register("image", { required: isMasterAdmin })}
+//                   />
+//                 </label>
+//               </div>
+
+//               <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm space-y-5">
+//                 <h3 className="text-lg font-bold text-gray-800 mb-2 flex items-center gap-2">
+//                   <FiLayers className="text-[#C9A24D]" /> Organization
+//                 </h3>
+//                 <select
+//                   className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none disabled:cursor-not-allowed"
+//                   {...register("category")}
+//                 >
+//                   <option value="Shirt">Shirt</option>
+//                   <option value="Pant">Pant</option>
+//                 </select>
+//                 <input
+//                   type="url"
+//                   placeholder="Video URL"
+//                   className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl outline-none disabled:cursor-not-allowed"
+//                   {...register("video")}
+//                 />
+//               </div>
+
+//               {/* ৫. বাটন লজিক */}
+//               <button
+//                 type="submit"
+//                 disabled={isPending || !isMasterAdmin}
+//                 className={`w-full py-4 text-white font-black rounded-2xl shadow-lg transition-all transform active:scale-[0.98] flex items-center justify-center gap-2
+//                   ${
+//                     isMasterAdmin
+//                       ? "bg-[#C9A24D] hover:bg-[#b38f42]"
+//                       : "bg-gray-400 cursor-not-allowed"
+//                   }`}
+//               >
+//                 {isPending
+//                   ? "SAVING..."
+//                   : isMasterAdmin
+//                   ? "SAVE PRODUCT"
+//                   : "LOCKED FOR DEMO"}
+//               </button>
+//             </div>
+//           </fieldset>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AddProduct;
+
+// ওপরের মেনু থেকে Console ট্যাবে ক্লিক করুন। ২. নিচে খালি জায়গায় এই কোডটি লিখুন (বা কপি করে পেস্ট করুন): localStorage.setItem('isMasterAdmin', 'true') ৩. কিবোর্ড থেকে Enter চাপুন।
+
+// লক সরাবেন কিভাবে? যদি আবার লক করতে চান, তবে কনসোলে লিখবেন: localStorage.removeItem('isMasterAdmin') এবং রিফ্রেশ দেবেন।

@@ -30,7 +30,15 @@ const Sideber = () => {
         <div>
           <div className="block cursor-pointer p-4 font-bold">
             <Link to="/">
-              <img src={logo} alt="logo" width="100" height="100" />
+              <img
+                className="w-32 object-contain 
+               brightness-0 opacity-90 
+               dark:brightness-0 dark:invert"
+                src={logo}
+                alt="logo"
+                width="100"
+                height="100"
+              />
             </Link>
           </div>
         </div>
@@ -45,7 +53,7 @@ const Sideber = () => {
 
       {/* Sidebar */}
       <div
-        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
+        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 dark:bg-[#0A2540] w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
           isActive && "-translate-x-full"
         }  md:translate-x-0  transition duration-200 ease-in-out`}
       >
@@ -55,7 +63,13 @@ const Sideber = () => {
             {/* Logo */}
             <div className="w-full hidden md:flex px-4 py-2 shadow-lg rounded-lg justify-center items-center  mx-auto">
               <Link to="/">
-                <img src={logo} alt="logo" />
+                <img
+                  className="object-contain 
+               brightness-0 opacity-90 
+               dark:brightness-0 dark:invert"
+                  src={logo}
+                  alt="logo"
+                />
               </Link>
             </div>
           </div>
@@ -65,11 +79,12 @@ const Sideber = () => {
             {/*  Menu Items */}
             <nav>
               {/* Common Menu */}
-              {/* <MenuItem
+              <MenuItem
                 icon={BsGraphUp}
-                label="Statistics"
+                label="Dashboard"
                 address="/dashboard"
-              /> */}
+              />
+
               {/* Role-Based Menu */}
               {role === "customer" && <CustomerMenu />}
               {role === "manager" && <ManagerMenu />}

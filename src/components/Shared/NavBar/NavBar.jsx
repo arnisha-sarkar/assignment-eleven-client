@@ -188,7 +188,7 @@ const NavBar = ({ theme, setTheme }) => {
   };
 
   return (
-    <div className="bg-[#F5F2EE] dark:bg-[#0A2540] sticky top-0 z-50 shadow-sm border-b border-gray-200">
+    <div className="bg-[#F5F2EE] dark:bg-[#0A2540] sticky top-0 z-50 shadow-sm">
       <Container>
         <div className="navbar px-0 py-2">
           <div className="navbar-start">
@@ -196,7 +196,7 @@ const NavBar = ({ theme, setTheme }) => {
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost lg:hidden text-[#0A2540]"
+                className="btn btn-ghost lg:hidden text-[#0A2540] dark:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +215,7 @@ const NavBar = ({ theme, setTheme }) => {
               </div>
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-[#F5F2EE]  text-[#0A2540] rounded-box z-1 mt-3 w-52 p-2 shadow border border-gray-100"
+                className="menu menu-sm dropdown-content bg-[#F5F2EE] dark:bg-[#0A2540]  text-[#0A2540] dark:text-white rounded-box z-1 mt-3 w-52 p-2 shadow border border-gray-100"
               >
                 <li>
                   <MyLink to="/">Home</MyLink>

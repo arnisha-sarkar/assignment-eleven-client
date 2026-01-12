@@ -303,7 +303,7 @@ const ProductDetails = () => {
               </div>
 
               {/* Action Area */}
-              <div className="pt-6 border-t border-gray-100 dark:border-gray-800">
+              {/* <div className="pt-6 border-t border-gray-100 dark:border-gray-800">
                 {user && role !== "admin" && role !== "seller" ? (
                   <motion.div
                     whileHover={{ scale: 1.02 }}
@@ -321,6 +321,33 @@ const ProductDetails = () => {
                   <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900/30 rounded-xl">
                     <p className="text-red-500 text-sm font-semibold text-center uppercase tracking-widest">
                       Login as customer to place order.
+                    </p>
+                  </div>
+                )}
+              </div> */}
+              <div className="pt-6 border-t border-gray-100 dark:border-gray-800">
+                {/* এখানে role !== "manager" যোগ করা হয়েছে */}
+                {user &&
+                role !== "admin" &&
+                role !== "seller" &&
+                role !== "manager" ? (
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <button
+                      onClick={handleOrder}
+                      className="bg-[#C9A24D] text-[#0A2540] w-full py-5 rounded-2xl text-lg font-black shadow-xl shadow-[#C9A24D]/20 uppercase tracking-widest transition-all hover:bg-[#b38f42]"
+                    >
+                      Order Now
+                    </button>
+                  </motion.div>
+                ) : (
+                  <div className="p-4 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/20 rounded-2xl">
+                    <p className="text-red-500 dark:text-red-400 text-xs font-black text-center uppercase tracking-[0.1em]">
+                      {user
+                        ? `Privileged Role (${role}): You cannot place orders.`
+                        : "Please login as a customer to place an order."}
                     </p>
                   </div>
                 )}

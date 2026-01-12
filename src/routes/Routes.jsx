@@ -6,7 +6,6 @@ import SignUp from "../pages/SignUp/SignUp";
 import Login from "../pages/Login/Login";
 import DashboardLayout from "../layouts/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
-import AddProduct from "../components/Form/AddProduct";
 import AllProduct from "../pages/AllProduct/AllProduct";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import PaymentSucess from "../pages/Payment/PaymentSucess";
@@ -26,6 +25,8 @@ import TrackOrder from "../pages/Dashboard/Customer/TrackOrder";
 import Moments from "../pages/Moments";
 import Brand from "../pages/Brand";
 import Faq from "../pages/Faq";
+import Dashboard from "../pages/Dashboard/Common/Dashboard";
+import AddProduct from "../components/Form/AddProduct";
 
 export const router = createBrowserRouter([
   {
@@ -91,14 +92,14 @@ export const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      // {
-      //   index: true,
-      //   element: (
-      //     <PrivateRoute>
-      //       <Statistics />
-      //     </PrivateRoute>
-      //   ),
-      // },
+      {
+        index: true,
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
+      },
       {
         path: "add-product",
         element: (

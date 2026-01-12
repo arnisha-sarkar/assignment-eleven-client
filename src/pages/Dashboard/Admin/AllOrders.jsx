@@ -41,7 +41,7 @@ const AllOrders = () => {
               type="text"
               placeholder="Search by Order ID or User Email..."
               onChange={(e) => setSearchText(e.target.value)}
-              className="w-[70%] px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 shadow-sm"
+              className="w-[70%] px-4 py-2 border border-[#C9A24D] rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 shadow-sm"
             />
           </div>
 

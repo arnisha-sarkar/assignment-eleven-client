@@ -30,7 +30,7 @@ const ApprovedOrders = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6 text-green-600 border-b pb-2">
+      <h2 className="text-2xl font-bold mb-6 text-white border-b pb-2">
         Approved Orders
       </h2>
       <div className="overflow-x-auto shadow-sm rounded-lg">
