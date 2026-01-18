@@ -169,7 +169,7 @@ const OurProducts = () => {
             viewport={{ once: true }}
             className="text-3xl md:text-5xl font-black text-[#0A2540] dark:text-white uppercase tracking-tight"
           >
-            eatured Products
+            Featured Products
           </motion.h1>
           <div className="w-20 h-1.5 bg-[#C9A24D] mx-auto mt-6 rounded-full shadow-lg shadow-[#C9A24D]/20"></div>
         </div>
